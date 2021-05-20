@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+   <meta charset="utf-8">
+   <title>test</title>
+    
+      <script type="text/javascript">
+         
+       
+		
+		  function Do1003()
+         {
+            if ("WebSocket" in window)
+            {
+               
+               
+               // 打开一个 web socket
+               var ws = new WebSocket('ws://127.0.0.1:36668');
+                
+               ws.onopen = function()
+               {
+                  // Web Socket 已连接上，使用 send() 方法发送数据
+                  alert("连接成功");
+                
+                 //filepath：推送内容路径  signfiletype：推送内容类型pdf|jpg    compose:是否需要合成	
+				 //left：签名距离内容页面左边距离
+				 //top：签名距离页面顶部距离（百分比）   width签名图片宽度（百分比）   height：签名图片高度（百分比）
+				 //keyword:关键字（优先级高于坐标）  timeout：签名超时时间
+                 var json = {"bizcode":"2003","filepath":".\\7.pdf","signfiletype":"0","compose":"1","left":"50","top":"50","width":"10","height":"2","keyword":"签名","timeout":"60"};
+				 var str = JSON.stringify(json);
+                  ws.send(str);
+                //  alert("数据发送中...");
+               };
+               
+               ws.onerror = function(){
+                    alert("连接错误");
+               };
+
+               ws.onmessage = function (evt) 
+               { 
+                  var received_msg = evt.data;
+                  alert(received_msg);
+                  ws.close();
+               };
+                
+               ws.onclose = function()
+               { 
+                  // 关闭 websocket
+                  //alert("连接已关闭..."); 
+               };
+            }
+            
+            else
+            {
+               // 浏览器不支持 WebSocket
+               alert("您的浏览器不支持 WebSocket!");
+            }
+         }
+       
+	
+       
+ 
+      </script>
+        
+   </head>
+   <body>
+   
+      <div id="sse">
+        
+		 <p></p><a href="javascript:Do1003()">签名</a>
+		
+		
+      </div>
+      
+   </body>
+</html>
